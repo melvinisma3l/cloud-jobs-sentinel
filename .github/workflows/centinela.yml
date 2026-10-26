@@ -1,0 +1,24 @@
+name: Centinela Nocturno de Empleos 24/7
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  ejecutar-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar librerias
+        run: pip install requests
+
+      - name: Correr Centinela Cloud
+        run: python bot_cloud.py
