@@ -9,7 +9,7 @@ jobs:
   ejecutar-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar codigo
+      - name: Descargar codigo del repositorio
         uses: actions/checkout@v4
 
       - name: Configurar Python
@@ -17,8 +17,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar librerias
-        run: pip install requests
+      - name: Instalar librerias necesarias
+        run: pip install requests openpyxl
 
-      - name: Correr Centinela Cloud
-        run: python bot_cloud.py
+      - name: Ejecutar Extractor y Generar Excel
+        run: python generar_reporte_cloud.py
+
+      - name: Poner Reporte Excel Descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reporte-Empleos-Remotos-Diario
+          path: Daily_Remote_Jobs_Report.xlsx
