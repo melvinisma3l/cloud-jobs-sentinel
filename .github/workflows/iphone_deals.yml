@@ -1,0 +1,32 @@
+name: Cazador Ofertas iPhone 17 USA 🍎
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  cazar-iphones:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar librerias
+        run: pip install requests openpyxl
+
+      - name: Cazar Ofertas y Alertar a Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python cazador_iphone17.py
+
+      - name: Guardar Excel de Ofertas iPhone 17
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ranking-Ofertas-iPhone-17-USA
+          path: iPhone_17_Best_Deals_USA.xlsx
